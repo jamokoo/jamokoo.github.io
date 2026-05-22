@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Copy</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; background: #f0f2f5; }
+        button { padding: 20px 40px; font-size: 24px; font-weight: bold; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; width: 80%; max-width: 400px; }
+        button:active { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <button id="btn">Tap to Copy Text</button>
+    <script>
+        const text = new URLSearchParams(window.location.search).get('copy');
+        if (text) {
+            document.getElementById('btn').addEventListener('click', () => {
+                navigator.clipboard.writeText(text)
+                    .then(() => { document.getElementById('btn').innerText = "Copied!"; })
+                    .catch(() => { alert("Failed to copy. Ensure you are using HTTPS."); });
+            });
+        } else {
+            document.getElementById('btn').innerText = "No text provided in URL";
+        }
+    </script>
+</body>
+</html>
