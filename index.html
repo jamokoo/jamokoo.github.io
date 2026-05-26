@@ -25,11 +25,6 @@
             cursor: pointer; 
             width: 80%; 
             max-width: 400px; 
-            transition: opacity 0.2s;
-        }
-        button:disabled {
-            background: #ccc !important;
-            cursor: not-allowed;
         }
         #btn { background: #007bff; }
         #btn:active { background: #0056b3; }
@@ -55,20 +50,24 @@
                     .then(() => { copyBtn.innerText = "Copied!"; })
                     .catch(() => { alert("Failed to copy. Ensure you are using HTTPS."); });
             } else {
-                alert("Nothing to copy! Add ?copy=... to the URL.");
+                alert("Nothing to copy!");
             }
         });
 
         // Google Maps functionality
         mapBtn.addEventListener('click', () => {
             if (text) {
-                window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(text)}`, '_blank');
+                // 'z=15' sets the zoom level. 
+                // Higher number = closer (21 is max), Lower number = further away (1 is world).
+                const zoom = 15;
+                const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(text)}&z=${zoom}`;
+                
+                window.open(mapUrl, '_blank');
             } else {
-                alert("No coordinates provided in the URL.");
+                alert("No coordinates provided.");
             }
         });
 
-        // Update UI if text is missing
         if (!text) {
             copyBtn.innerText = "No text provided";
         }
