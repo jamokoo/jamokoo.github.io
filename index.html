@@ -15,6 +15,13 @@
             background: #f0f2f5; 
             gap: 20px; 
         }
+        #nameField {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            padding: 0 20px;
+        }
         button { 
             padding: 20px 40px; 
             font-size: 24px; 
@@ -33,12 +40,20 @@
     </style>
 </head>
 <body>
+    <div id="nameField"></div>
     <button id="btn">Tap to Copy Text</button>
     <button id="mapBtn">Google Maps</button>
 
     <script>
-        const text = new URLSearchParams(window.location.search).get('copy');
-        
+        const params = new URLSearchParams(window.location.search);
+        const text = params.get('copy');
+        const name = params.get('name');
+
+        // Display gym name
+        if (name) {
+            document.getElementById('nameField').innerText = name;
+        }
+
         // Copy Button Logic
         const btn = document.getElementById('btn');
         if (text) {
@@ -54,8 +69,6 @@
         // Google Maps Button Logic
         document.getElementById('mapBtn').addEventListener('click', () => {
             if (text) {
-                // This uses your exact requested format
-                // Change z=15 to a lower number (like 12) if it's still too close
                 window.location.href = `https://maps.google.com/maps?q=${text}&z=14`;
             } else {
                 alert("No coordinates provided.");
